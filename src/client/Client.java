@@ -12,7 +12,7 @@ public class Client implements IStableMulticast {
     }
 
     private void init() {
-        stableMulticast = new StableMulticast("230.0.0.0", 4446, this);
+        stableMulticast = new StableMulticast("224.0.0.1", 4446, this);
     }
 //acho q o deliver tem q ser usado no stableMulticast, a partir do this.client.deliver algo assim
     @Override
