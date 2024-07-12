@@ -14,14 +14,14 @@ public class Client implements IStableMulticast {
     private void init() {
         stableMulticast = new StableMulticast("230.0.0.0", 4446, this);
     }
-
+//acho q o deliver tem q ser usado no stableMulticast, a partir do this.client.deliver algo assim
     @Override
     public void deliver(String msg) {
         System.out.println("Delivered message: " + msg);
     }
 
     public void sendMessage(String msg) {
-        stableMulticast.msend(msg, this);
+        stableMulticast.msend(msg);
     }
 
     @Override

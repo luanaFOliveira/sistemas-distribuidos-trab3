@@ -48,7 +48,7 @@ public class StableMulticast {
         }).start();
     }
 
-    public void msend(String msg, IStableMulticast client) {
+    public void msend(String msg) {
         if (groupMembers.isEmpty()) {
             System.out.println("No group members available to send the message.");
             return;
