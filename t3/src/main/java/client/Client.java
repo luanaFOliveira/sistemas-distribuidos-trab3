@@ -1,6 +1,7 @@
 package client;
 
-import StableMulticast.*;
+import StableMulticast.IStableMulticast;
+import StableMulticast.StableMulticast;
 import java.util.Scanner;
 
 public class Client implements IStableMulticast {
@@ -11,34 +12,41 @@ public class Client implements IStableMulticast {
         this.clientName = clientName;
     }
 
-    private void init() {
-        stableMulticast = new StableMulticast("224.0.0.1", 4446, this);
+    private void init(String clientIp, Integer clientPort) {
+        stableMulticast = new StableMulticast(clientIp, clientPort, this);
     }
-//acho q o deliver tem q ser usado no stableMulticast, a partir do this.client.deliver algo assim
+
     @Override
     public void deliver(String msg) {
-        System.out.println("Delivered message: " + msg);
+        System.out.println(msg);
     }
 
     public void sendMessage(String msg) {
         stableMulticast.msend(msg);
     }
 
+    //    TODO: método não presente na especificação do trabalho. Portanto, não estará presente no cliente de teste e o middleware não pode depender de sua existência. Remover todas referências
     @Override
     public String getClientName() {
         return this.clientName;
     }
 
     public static void main(String[] args) {
+        var clientIp = args[0];
+        var clientPort = Integer.parseInt(args[1]);
+
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter client name: ");
-        String clientName = scanner.nextLine();
+        String clientName = "";
+        while (clientName.equals("")) {
+            clientName = scanner.nextLine();
+        }
 
         Client client = new Client(clientName);
-        client.init();
+        client.init(clientIp, clientPort);
 
+        System.out.print("Para enviar, digite e pressione enter: \n");
         while (true) {
-            System.out.print("Enter message to send: ");
             String msg = scanner.nextLine();
             client.sendMessage(msg);
         }
